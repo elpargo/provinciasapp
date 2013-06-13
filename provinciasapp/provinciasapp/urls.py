@@ -7,7 +7,8 @@ from provinciasapp import views
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^.*$', views.provincias, name='home'),
+    url(r'^doc/.*$', views.doc, name='doc'),
+    url(r'^.*$', views.provincias, name='provincias'),
     # url(r'^provinciasapp/', include('provinciasapp.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

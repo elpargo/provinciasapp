@@ -26,3 +26,15 @@ def provincias(request):
     c = filter(None,c) #eliminate the first and last empty path items
     c = get_anything(c)
     return json_render_to_response(c)
+
+import pprint
+def doc(request):
+    header = request.path.split('/')
+    header = filter(None,header) #eliminate the first and last empty path items
+    header.remove('doc')
+    body = get_anything(header)
+    body =pprint.pformat(body)
+    out = "{}{}<hr><hr>{}{}".format("<pre>",header,body,"</pre>")
+    return HttpResponse(out)
+
+
