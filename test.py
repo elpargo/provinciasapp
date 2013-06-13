@@ -1,4 +1,5 @@
 from provinciasapp import app as application
+from provinciasapp import get_provincias
 
 from webtest import TestApp
 app = TestApp(application)
@@ -16,5 +17,5 @@ def validate_package(url):
 def test_json():
   payload = validate_package('/provincias')
   assert len(payload)==32,len(payload)
-  assert "distrito nacional" in payload, payload
+  assert "Distrito Nacional" in str(payload)
 

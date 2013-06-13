@@ -12,17 +12,32 @@ def get_soup():
     soup = BeautifulSoup(html_doc)
     return soup
 
+def get_json():
+    with open("provincias.json") as f:
+        data = json.loads(f.read())
+    return data
+
 def get_provincias():
-    soup = get_soup()
-    #this crap is in a table full of arrgssss luckily for us is the only strong in the whole page :D
-    res = soup.find_all('strong')
-    res = [item.text for item in res] #get the actual text not the tag
-    return json.dumps(res)#json go!
+        data = get_json()
+        res = []
+        return json.dumps(res)#json go!
+
+def get_anything(params):
+    #TODO: add error handling
+    data = get_json()
+    for level in params:
+        data = data[level]
+    return data
 
 class ProvinciasResource:
-    def on_get(self, req, resp):
-        resp.body = get_provincias()
+    def on_get(self, req, resp, query=None):
+        base_query = ['1','Provincia']
+        if query:
+            base_query.append(query)
+        data = get_anything(base_query)
+        resp.body = json.dumps(data)
 
 app = api = falcon.API()
 provs = ProvinciasResource()
-api.add_route('/provincias', provs)
+api.add_route('/provincias/', provs)
+api.add_route('/provincias/{query}', provs)
